@@ -8,8 +8,7 @@ import { Avatar } from "antd";
 const { Meta } = Card;
 import { Spin } from "antd";
 
-var access_token =
-  "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";
+var access_token = "";
 
 const Commits = ({ propsData }) => {
   const [getForks, setForks] = useState();
