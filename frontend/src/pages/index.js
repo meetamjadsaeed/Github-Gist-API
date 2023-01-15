@@ -1,21 +1,15 @@
 import styles from "@/styles/Home.module.css";
 import MainNav from "@/components/reuse/MainNav";
 import MainFooter from "@/components/reuse/MainFooter";
+import Commits from "@/components/Commits";
 
 import Head from "next/head";
 import { useState } from "react";
-import { useEffect } from "react";
 import axios from "axios";
-import Link from "next/link";
-
-import { Inter } from "@next/font/google";
 
 import { Card, Col, Row } from "antd";
-import { AudioOutlined } from "@ant-design/icons";
-import { Input, Space } from "antd";
+import { Input } from "antd";
 const { Search } = Input;
-import { Avatar } from "antd";
-const { Meta } = Card;
 import { Button } from "antd";
 import { Spin } from "antd";
 
@@ -24,19 +18,16 @@ var access_token =
 
 export default function Home() {
   const [publicGists, setPublicGists] = useState();
-  // const [getForks, setForks] = useState();
 
   const onSearch = async (value) => {
-    // console.log(value);
-    // Get Gists
+    // Get Gists by username e.g bgoonz
     await axios
-      .get(`https://api.github.com/users/${value}/gists`, {
+      .get(`${process.env.NEXT_PUBLIC_BACKEND_API}users/${value}/gists`, {
         headers: {
           Authorization: `token ${access_token}`,
         },
       })
       .then((result) => setPublicGists(result.data))
-      // .then((result) => console.log(result))
       .catch(function (error) {
         if (error.response) {
           // Request made and server responded
@@ -51,82 +42,8 @@ export default function Home() {
           console.log("Error", error.message);
         }
       });
-
-    // fetch(`https://api.github.com/users/${value}/gists`)
-    // .then((response) => response.json())
-    // // .then((result) => console.log(result.json()));
-    // .catch(function (error) {
-    //   if (error.response) {
-    //     // Request made and server responded
-    //     console.log(error.response.data);
-    //     console.log(error.response.status);
-    //     console.log(error.response.headers);
-    //   } else if (error.request) {
-    //     // The request was made but no response was received
-    //     console.log(error.request);
-    //   } else {
-    //     // Something happened in setting up the request that triggered an Error
-    //     console.log('Error', error.message);
-    //   }
-
-    // })
-    // .then((ids) => {
-    //   const respones = ids.map(
-    //     (forkId) =>
-    //       fetch(
-    //         `https://api.github.com/gists/${forkId.id}/forks`
-    //       )
-    //       // .then((res) => res.json())
-    //     .then((res) => console.log(res.json())),
-    //   );
-    //   Promise.all(respones).then((fetchedids) => {
-    //     setForks(fetchedids);
-    //     // setIsLoading(false)
-    //   });
-    // })
-    // .catch(function (error) {
-    //   if (error.response) {
-    //     // Request made and server responded
-    //     console.log(error.response.data);
-    //     console.log(error.response.status);
-    //     console.log(error.response.headers);
-    //   } else if (error.request) {
-    //     // The request was made but no response was received
-    //     console.log(error.request);
-    //   } else {
-    //     // Something happened in setting up the request that triggered an Error
-    //     console.log('Error', error.message);
-    //   }
-
-    // });
   };
 
-  // const getData = async () => {
-  //   // Get Posts
-  //   await axios
-  //     // .get(`https://api.github.com/gists`)
-  //     .get(`https://api.github.com/users/bgoonz/gists`)
-  //     // .then((result) => setPublicGists(result.data))
-  //       .then((result) => console.log(result.data))
-  //     .catch(function (error) {
-  //       if (error.response) {
-  //         // Request made and server responded
-  //         console.log(error.response.data);
-  //         console.log(error.response.status);
-  //         console.log(error.response.headers);
-  //       } else if (error.request) {
-  //         // The request was made but no response was received
-  //         console.log(error.request);
-  //       } else {
-  //         // Something happened in setting up the request that triggered an Error
-  //         console.log("Error", error.message);
-  //       }
-  //     });
-  // };
-
-  // useEffect(() => {
-  //   getData();
-  // }, []);
   return (
     <>
       <Head>
@@ -136,8 +53,8 @@ export default function Home() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <div class="hero-container">
-        <div class="hero-body">
+      <div className={styles.heroContainer}>
+        <div className={styles.heroBody}>
           <h1 style={{ marginBottom: "20px" }}>Search Gists By User</h1>
 
           <Search
@@ -160,7 +77,14 @@ export default function Home() {
             {publicGists ? (
               publicGists.map((item) => {
                 return (
-                  <Col span={8} style={{ marginBottom: "2%", marginTop: "2%" }}>
+                  <Col
+                    xl={8}
+                    lg={8}
+                    md={12}
+                    sm={24}
+                    xs={24}
+                    style={{ marginBottom: "2%", marginTop: "2%" }}
+                  >
                     <Card
                       style={{
                         width: 300,
@@ -183,33 +107,8 @@ export default function Home() {
                           </Button>
                         );
                       })}
-                    <Link href={`forksingle/${item.id}`}>
-                        <Meta
-                          avatar={
-                            <Avatar src="https://media.istockphoto.com/id/1309328823/photo/headshot-portrait-of-smiling-male-employee-in-office.jpg?b=1&s=170667a&w=0&k=20&c=MRMqc79PuLmQfxJ99fTfGqHL07EDHqHLWg0Tb4rPXQc=" />
-                          }
-                          title="Johnson"
-                          style={{ marginTop: "5%", marginBottom: "5%" }}
-                        />
-                      </Link>
-                      <Link href={`forksingle/${item.id}`}>
-                        <Meta
-                          avatar={
-                            <Avatar src="https://media.istockphoto.com/id/1309328823/photo/headshot-portrait-of-smiling-male-employee-in-office.jpg?b=1&s=170667a&w=0&k=20&c=MRMqc79PuLmQfxJ99fTfGqHL07EDHqHLWg0Tb4rPXQc=" />
-                          }
-                          title="Johnson"
-                          style={{ marginTop: "5%", marginBottom: "5%" }}
-                        />
-                      </Link>
-                      <Link href={`forksingle/${item.id}`}>
-                        <Meta
-                          avatar={
-                            <Avatar src="https://media.istockphoto.com/id/1309328823/photo/headshot-portrait-of-smiling-male-employee-in-office.jpg?b=1&s=170667a&w=0&k=20&c=MRMqc79PuLmQfxJ99fTfGqHL07EDHqHLWg0Tb4rPXQc=" />
-                          }
-                          title="Johnson"
-                          style={{ marginTop: "5%", marginBottom: "5%" }}
-                        />
-                      </Link>
+
+                      <Commits propsData={{ gistId: item.id && item.id }} />
                     </Card>
                   </Col>
                 );

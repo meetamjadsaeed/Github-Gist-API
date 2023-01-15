@@ -19,31 +19,6 @@ body {
   margin: auto;
 }
 
-.hero-container {
-  background: url(https://www.bleepstatic.com/content/hl-images/2021/05/10/GitHub-headpic.jpg)
-    center/ cover;
-  height: 100vh;
-  position: relative;
-}
-
-.hero-container::before {
-  content: "";
-  background: var(--clr-secondary);
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  opacity: 0.8;
-}
-
-.hero-body {
-  position: relative;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  flex-direction: column;
-  height: 100%;
-}
-
 h1 {
   margin: 0;
   display: inline;
